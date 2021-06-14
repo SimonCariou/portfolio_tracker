@@ -4,7 +4,8 @@ from currency_converter import CurrencyConverter
 from datetime import datetime
 
 #local imports
-import config_const as config
+# import config_const as config
+import config
 import db_connector
 
 class PortfolioCalculator():
@@ -97,8 +98,26 @@ if __name__ == "__main__":
     db_ticker.insert_one(output)
     client.close()
     
-    print_dict(output)
+    print("Portfolio value per coin:")
+    for key, value in portfolio_value.items():
+        print(f"* {key}:")
+        # print(f"\t- {value:.2f}$")
+        print(f"\t- {calculator.convert(value, config.DEFAULT_FIAT, 'EUR'):.2f}€")
+
+    print("\n")
+    print(f"Total portfolio value ({percent_change_portfolio_global:+.2%})")
+    # print(f"* {total_portfolio_usd:.2f}$")
+    print(f"* {total_portfolio_eur:.2f}€")
+    print("\n")
+
+    print("Plus value:")
+    print(f"* Raw: {total_portfolio_eur - config.INITIAL_INVESTMENT_EUR:.2f}€")
+    print(f"* After taxes: {plus_value_after_taxes:.2f}€")
+
+    print("\n")
+    print(f"Total portfolio after taxes ({percent_change_portfolio_after_taxes:+.2%})")
     
+    print(f"* {total_portfolio_after_taxes:.2f}€")
     print(f"% repartition portfolio: {calculator.percent_repartition_portfolio(portfolio_value)}")
 
     
