@@ -26,7 +26,7 @@ class PortfolioCalculator():
             req = requests.get(dict_urls[asset])
             scraped_page = BeautifulSoup(req.text, "lxml")
             price_tags = scraped_page.find_all(
-                'div', class_='priceValue___11gHJ')
+                'div', class_='priceValue')
             # prices[asset] = float(price_tags[0].text.split()[1].replace(",","")) #in case there are more than one, pick the first one
             prices[asset] = float(price_tags[0].text.split("$")[
                                   1].replace(",", ""))
